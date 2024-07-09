@@ -19,11 +19,8 @@ runs:
 
         URL="${{ inputs.url }}"
 
-        go() {
+        nix develop --no-warn-dirty --accept-flake-config --command \
           linkchecker --no-warnings --check-extern --output failures "${URL}" "${IGNORE_URLS[@]}" 
-        }
-        
-        nix develop --no-warn-dirty --accept-flake-config --command go 
 
         if [ $? -ne 0 ]; then 
           echo "${URL} has broken links, see output above"
